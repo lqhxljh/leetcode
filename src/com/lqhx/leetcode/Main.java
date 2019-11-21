@@ -9,9 +9,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static void main(String[] args) {
-        launch(args);
         Solution solution = new Solution();
-        solution.reverse(123);
+        System.out.println(solution.isPalindrome(123));
     }
 
     @Override
