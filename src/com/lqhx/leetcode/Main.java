@@ -10,7 +10,8 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.isPalindrome(123));
+        int result = solution.romanToInt("MCMXCIV");
+        System.out.println(result);
     }
 
     @Override
