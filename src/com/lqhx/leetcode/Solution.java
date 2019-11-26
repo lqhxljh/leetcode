@@ -336,7 +336,6 @@ public class Solution {
 
     public int getDoubleRomanNum(String romanStr) {
         switch (romanStr) {
-
             case "IV":
                 return 4;
             case "IX":
@@ -354,5 +353,146 @@ public class Solution {
         }
     }
 
+    public String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        } else {
+            String result = strs[0];
+            for (int i = 1; i < strs.length; i++) {
+                while (result.length() > 0 && strs[i].indexOf(result) != 0) {
+                    if (result.length() == 1) {
+                        return "";
+                    } else {
+                        result = result.substring(0, result.length() - 1);
+                    }
+                }
+            }
+            return result;
+        }
+    }
 
+    /**
+     * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+     * <p>
+     * 有效字符串需满足：
+     * <p>
+     * 左括号必须用相同类型的右括号闭合。
+     * 左括号必须以正确的顺序闭合。
+     * 注意空字符串可被认为是有效字符串。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: "()"
+     * 输出: true
+     * 示例 2:
+     * <p>
+     * 输入: "()[]{}"
+     * 输出: true
+     * 示例 3:
+     * <p>
+     * 输入: "(]"
+     * 输出: false
+     * 示例 4:
+     * <p>
+     * 输入: "([)]"
+     * 输出: false
+     * 示例 5:
+     * <p>
+     * 输入: "{[]}"
+     * 输出: true
+     */
+    public boolean isValid(String s) {
+        if (s == null || s.length() % 2 == 1) {
+            return false;
+        } else {
+            Stack<Character> characters = new Stack<>();
+            for (int i = 0; i < s.length(); i++) {
+                switch (s.charAt(i)) {
+                    case '{':
+                        characters.push('{');
+                        break;
+                    case '[':
+                        characters.push('[');
+                        break;
+                    case '(':
+                        characters.push('(');
+                        break;
+                    case '}':
+                        if (characters.isEmpty()) {
+                            return false;
+                        } else {
+                            if (!characters.pop().equals('{')) {
+                                return false;
+                            }
+                        }
+                        break;
+                    case ']':
+                        if (characters.isEmpty()) {
+                            return false;
+                        } else {
+                            if (!characters.pop().equals('[')) {
+                                return false;
+                            }
+                        }
+                        break;
+                    case ')':
+                        if (characters.isEmpty()) {
+                            return false;
+                        } else {
+                            if (!characters.pop().equals('(')) {
+                                return false;
+                            }
+                        }
+                        break;
+                    default:
+                        return false;
+                }
+            }
+            if (characters.isEmpty()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    /**
+     * 21. 合并两个有序链表
+     */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        } else if (l2 == null) {
+            return l1;
+        }
+        insert(l1, l2);
+        return l1;
+    }
+
+    private void insert(ListNode l1, ListNode l2) {
+        if (l2 == null || l1 == null) {
+            return;
+        } else {
+            if (l1.val <= l2.val) {
+                if (l1.next == null) {
+                    l1.next = l2;
+                    return;
+                } else if (l1.next.val >= l2.val) {
+                    ListNode temp1 = l1.next;
+                    ListNode temp2 = l2.next;
+                    l1.next = l2;
+                    l2.next = temp1;
+                    insert(l1.next, temp2);
+                } else {
+                    insert(l1.next, l2);
+                }
+            } else {
+                ListNode node = new ListNode(l1.val);
+                node.next = l1.next;
+                l1.val = l2.val;
+                l1.next = node;
+                insert(l1, l2.next);
+            }
+        }
+    }
 }

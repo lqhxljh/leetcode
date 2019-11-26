@@ -1,24 +1,16 @@
 package com.lqhx.leetcode;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Main {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int result = solution.romanToInt("MCMXCIV");
-        System.out.println(result);
-    }
+        boolean isValid = solution.isValid("([)]");
+        ListNode listNode1 = new ListNode(2);
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
+        ListNode listNode3 = new ListNode(1);
+
+        solution.mergeTwoLists(listNode1, listNode3);
+        System.out.println(isValid);
     }
 }
