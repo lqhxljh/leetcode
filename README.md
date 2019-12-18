@@ -70,3 +70,8 @@ Do the questions in leetCode every day, and study hard every day. Learning makes
 2、碰到'{' 、'['  '(' 押入栈
 3、碰到'}' ']' ')'出栈如果不匹配就返回false
 4、最后判定栈是否为空
+
+##
+#2019/12/18
+#今天学习递归 链表反转
+#使用递归版和迭代版本
