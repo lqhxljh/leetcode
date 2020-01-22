@@ -381,6 +381,7 @@ public class Solution {
 //            }
 //        }
 //    }
+
     /**
      * 21. 合并两个有序链表
      */
@@ -418,6 +419,47 @@ public class Solution {
                 l1.next = node;
                 insert(l1, l2.next);
             }
+        }
+    }
+
+    public boolean isPalindrome(String s) {
+        if (s == null) {
+            return false;
+        } else if (s.length() == 0 || s.length() == 1) {
+            return true;
+        } else {
+            int start = 0;
+            int end = s.length() - 1;
+            String result = s.toUpperCase();
+            while (start < end) {
+                char startChar = result.charAt(start);
+                if (!isNumOrLetter(startChar)) {
+                    start++;
+                    continue;
+                }
+                char endChar = result.charAt(end);
+                if (!isNumOrLetter(endChar)) {
+                    end--;
+                    continue;
+                }
+                if (startChar == endChar)
+                {
+                    start++;
+                    end--;
+                    continue;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isNumOrLetter(char character) {
+        if ((character > '0' && character < '9') || (character > 'A' && character < 'Z')) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
