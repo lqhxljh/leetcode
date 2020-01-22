@@ -1,5 +1,7 @@
 package com.lqhx.leetcode;
 
+import com.lqhx.leetcode.DataStruck.ListNode;
+
 import java.util.*;
 
 public class Solution {

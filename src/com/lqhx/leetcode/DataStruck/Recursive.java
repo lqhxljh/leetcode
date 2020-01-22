@@ -1,6 +1,5 @@
 package com.lqhx.leetcode.DataStruck;
 
-
 public class Recursive {
     public ListNode reverseList(ListNode head) {
         if (head == null || head.next == null) {
@@ -41,14 +40,7 @@ public class Recursive {
         return result;
     }
 
-    public int maxDepth(TreeNode root) {
-        int result = 0;
-        result = getDepth(root);
-        return result;
-    }
 
-    private int getDepth(TreeNode root) {
-    }
 
     public class TreeNode {
         int val;
