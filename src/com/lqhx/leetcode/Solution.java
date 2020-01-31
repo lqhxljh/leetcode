@@ -1,6 +1,7 @@
 package com.lqhx.leetcode;
 
 import com.lqhx.leetcode.DataStruck.ListNode;
+import com.lqhx.leetcode.DataStruck.TreeNode;
 
 import java.util.*;
 
@@ -422,6 +423,11 @@ public class Solution {
         }
     }
 
+//    验证回文字符串
+//    给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。
+//
+//    说明：本题中，我们将空字符串定义为有效的回文串。
+
     public boolean isPalindrome(String s) {
         if (s == null) {
             return false;
@@ -442,12 +448,11 @@ public class Solution {
                     end--;
                     continue;
                 }
-                if (startChar == endChar)
-                {
+                if (startChar == endChar) {
                     start++;
                     end--;
                     continue;
-                }else{
+                } else {
                     return false;
                 }
             }
@@ -462,4 +467,295 @@ public class Solution {
             return false;
         }
     }
+
+    //    字符串转换整数 (atoi)
+//    请你来实现一个 atoi 函数，使其能将字符串转换成整数。
+//
+//    首先，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。
+//
+//    当我们寻找到的第一个非空字符为正或者负号时，则将该符号与之后面尽可能多的连续数字组合起来，作为该整数的正负号；假如第一个非空字符是数字，则直接将其与之后连续的数字字符组合起来，形成整数。
+//
+//    该字符串除了有效的整数部分之后也可能会存在多余的字符，这些字符可以被忽略，它们对于函数不应该造成影响。
+//
+//    注意：假如该字符串中的第一个非空格字符不是一个有效整数字符、字符串为空或字符串仅包含空白字符时，则你的函数不需要进行转换。
+//
+//    在任何情况下，若函数不能进行有效的转换时，请返回 0。
+//
+//    说明：
+//
+//    假设我们的环境只能存储 32 位大小的有符号整数，那么其数值范围为 [−231,  231 − 1]。如果数值超过这个范围，请返回  INT_MAX (231 − 1) 或 INT_MIN (−231) 。
+    public int myAtoi(String str) {
+        if (str == null || str.length() == 0) {
+            return 0;
+        } else {
+            long result = 0;
+            int flag = 0;
+            str = str.trim();
+            for (int i = 0; i < str.length(); i++) {
+                if (i == 0) {
+                    if (str.charAt(i) != '-') {
+                        int temp = getNum(str.charAt(i));
+                        if (temp >= 0) {
+                            result += temp;
+                        } else {
+                            return 0;
+                        }
+                    } else {
+                        flag = -1;
+                    }
+                } else {
+                    int temp = getNum(str.charAt(i));
+                    if (temp >= 0) {
+                        result = result * 10 + temp;
+                        if (flag == 0) {
+                            if (result > Integer.MAX_VALUE) {
+                                return Integer.MAX_VALUE;
+                            }
+                        } else if (flag == -1) {
+                            if (-result < Integer.MIN_VALUE) {
+                                return Integer.MIN_VALUE;
+                            }
+                        }
+
+                    } else {
+                        break;
+                    }
+                }
+            }
+            return (int) (flag == 0 ? result : -result);
+        }
+    }
+
+    public int getNum(char element) {
+        if (element >= '0' && element <= '9') {
+            return element - '0';
+        } else {
+            return -1;
+        }
+    }
+
+
+    public int strStr(String haystack, String needle) {
+        return haystack.indexOf(needle);
+    }
+
+    //外观数列
+//「外观数列」是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。前五项如下：
+//
+//            1.     1
+//            2.     11
+//            3.     21
+//            4.     1211
+//            5.     111221
+//            1 被读作  "one 1"  ("一个一") , 即 11。
+//            11 被读作 "two 1s" ("两个一"）, 即 21。
+//            21 被读作 "one 2",  "one 1" （"一个二" ,  "一个一") , 即 1211。
+//
+//    给定一个正整数 n（1 ≤ n ≤ 30），输出外观数列的第 n 项。
+//
+//    注意：整数序列中的每一项将表示为一个字符串。
+    public String countAndSay(int n) {
+        String[] result = new String[n];
+        for (int i = 0; i < result.length; i++) {
+            if (i == 0) {
+                result[i] = "1";
+            } else if (i == 1) {
+                result[i] = "11";
+            } else {
+                StringBuffer stringBuffer = new StringBuffer("");
+                String temp = result[i - 1];
+                char lastElement = temp.charAt(0);
+                int count = 1;
+                for (int j = 1; j < temp.length(); j++) {
+                    char element = temp.charAt(j);
+                    if (temp.charAt(j) == lastElement) {
+                        count++;
+                    } else {
+                        stringBuffer.append(count);
+                        stringBuffer.append(lastElement);
+                        lastElement = temp.charAt(j);
+                        count = 1;
+                    }
+                }
+                stringBuffer.append(count);
+                stringBuffer.append(lastElement);
+                result[i] = stringBuffer.toString();
+            }
+        }
+        return result[n - 1];
+    }
+
+    public String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length < 1) {
+            return "";
+        } else if (strs.length == 2) {
+            return strs[0];
+        } else {
+            String temp = strs[0];
+            while (temp.length() > 0) {
+                boolean isInterupt = false;
+                for (int i = 1; i < strs.length; i++) {
+                    if (!strs[i].startsWith(temp)) {
+                        temp = temp.substring(0, temp.length() - 1);
+                        isInterupt = true;
+                        break;
+                    }
+                }
+                if (!isInterupt) {
+                    return temp;
+                }
+            }
+        }
+        return "";
+    }
+
+    //    请编写一个函数，使其可以删除某个链表中给定的（非末尾）节点，你将只被给定要求被删除的节点。
+//
+//    现有一个链表 -- head = [4,5,1,9]，它可以表示为:
+//
+//
+//
+//
+//
+//    示例 1:
+//
+//    输入: head = [4,5,1,9], node = 5
+//    输出: [4,1,9]
+//    解释: 给定你链表中值为 5 的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -> 1 -> 9.
+//    示例 2:
+//
+//    输入: head = [4,5,1,9], node = 1
+//    输出: [4,5,9]
+//    解释: 给定你链表中值为 1 的第三个节点，那么在调用了你的函数之后，该链表应变为 4 -> 5 -> 9.
+    public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+
+    //    给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。
+//
+//    示例：
+//
+//    给定一个链表: 1->2->3->4->5, 和 n = 2.
+//
+//    当删除了倒数第二个节点后，链表变为 1->2->3->5.
+//    说明：
+//
+//    给定的 n 保证是有效的。
+//
+//    进阶：
+//
+//    你能尝试使用一趟扫描实现吗？
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ArrayList<ListNode> resultList = new ArrayList<>();
+        ListNode temp = head;
+        while (temp != null) {
+            resultList.add(temp);
+            temp = temp.next;
+        }
+        if (n > resultList.size()) {
+            return null;
+        } else if (n == resultList.size()) {
+            if (resultList.size() > 1) {
+                return resultList.get(1);
+            } else {
+                return null;
+            }
+        } else {
+            if (n == 1) {
+                resultList.get(resultList.size() - n - 1).next = null;
+            } else {
+                resultList.get(resultList.size() - n - 1).next = resultList.get(resultList.size() - n + 1);
+            }
+            return resultList.get(0);
+        }
+    }
+
+    public boolean isPalindrome(ListNode head) {
+        ArrayList<Integer> result = new ArrayList<>();
+        ListNode node = head;
+        while (node != null) {
+            result.add(node.val);
+            node = node.next;
+        }
+        int start = 0;
+        int end = result.size() - 1;
+        while (start < end) {
+
+            if (!result.get(start).equals(result.get(end))) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    public boolean hasCycle(ListNode head) {
+        HashSet<ListNode> resultHash = new HashSet<>();
+        ListNode node = head;
+        while (node != null) {
+
+            if (resultHash.contains(node)) {
+                return true;
+            } else {
+                resultHash.add(node);
+            }
+            node = node.next;
+        }
+        return false;
+    }
+//    验证二叉搜索树
+//    给定一个二叉树，判断其是否是一个有效的二叉搜索树。
+//
+//    假设一个二叉搜索树具有如下特征：
+//
+//    节点的左子树只包含小于当前节点的数。
+//    节点的右子树只包含大于当前节点的数。
+//    所有左子树和右子树自身必须也是二叉搜索树。
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    public boolean isValidBST(TreeNode root, long mn, long mx) {
+        if (root == null) {
+            return true;
+        }
+        if (root.val <= mn || root.val >= mx) return false;
+        return isValidBST(root.left, mn, root.val) && isValidBST(root.right, root.val, mx);
+    }
+//例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+//
+//            1
+//            / \
+//            2   2
+//            / \ / \
+//            3  4 4  3
+//            # 但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:
+//
+//            1
+//            / \
+//            2   2
+//            \   \
+//            3    3
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        } else {
+            return isSymmetric(root.left, root.right);
+        }
+    }
+    private boolean isSymmetric(TreeNode left, TreeNode right) {
+        if (left == null && right == null) {
+            return true;
+        } else if (left != null && right != null) {
+            return (left.val == right.val && isSymmetric(left.left, right.right) && isSymmetric(left.right, right.left));
+        } else {
+            return false;
+        }
+    }
+
 }
