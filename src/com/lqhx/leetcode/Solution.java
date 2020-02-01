@@ -705,7 +705,8 @@ public class Solution {
         }
         return false;
     }
-//    验证二叉搜索树
+
+    //    验证二叉搜索树
 //    给定一个二叉树，判断其是否是一个有效的二叉搜索树。
 //
 //    假设一个二叉搜索树具有如下特征：
@@ -727,7 +728,8 @@ public class Solution {
         if (root.val <= mn || root.val >= mx) return false;
         return isValidBST(root.left, mn, root.val) && isValidBST(root.right, root.val, mx);
     }
-//例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+
+    //例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
 //
 //            1
 //            / \
@@ -748,6 +750,7 @@ public class Solution {
             return isSymmetric(root.left, root.right);
         }
     }
+
     private boolean isSymmetric(TreeNode left, TreeNode right) {
         if (left == null && right == null) {
             return true;
@@ -758,4 +761,107 @@ public class Solution {
         }
     }
 
+    //    二叉树的层次遍历
+//    给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。
+//
+//    例如:
+//    给定二叉树: [3,9,20,null,null,15,7],
+//
+//            3
+//            / \
+//            9  20
+//            /  \
+//            15   7
+//    返回其层次遍历结果：
+//
+//            [
+//            [3],
+//            [9,20],
+//            [15,7]
+//            ]
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList();
+        if (root != null) {
+            List<TreeNode> temp = new ArrayList<>();
+            temp.add(root);
+            levelOrder(temp, result);
+        }
+        return result;
+
+    }
+
+    private void levelOrder(List<TreeNode> temp, List<List<Integer>> result) {
+        if (temp == null || temp.size() == 0) {
+            return;
+        }
+        List<TreeNode> temp2 = new ArrayList<>();
+        List<Integer> temp3 = new ArrayList<>();
+        for (TreeNode node : temp) {
+            if (node != null) {
+                temp3.add(node.val);
+            }
+            if (node.left != null) {
+                temp2.add(node.left);
+            }
+            if (node.right != null) {
+                temp2.add(node.right);
+            }
+        }
+        result.add(temp3);
+        if (temp2.size() > 0) {
+            levelOrder(temp2, result);
+        }
+    }
+
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return null;
+        } else {
+            int start = 0;
+            int end = nums.length - 1;
+            return sortedArrayToBST(nums, start, end);
+        }
+    }
+
+    private TreeNode sortedArrayToBST(int[] nums, int start, int end) {
+        if (start > end) {
+            return null;
+        } else {
+            int mid = (end - start) / 2 + start;
+            if (mid >= start && mid <= end) {
+                TreeNode node = new TreeNode(nums[mid]);
+                if (mid > start) {
+                    node.left = sortedArrayToBST(nums, start, mid - 1);
+                }
+                if (mid < end) {
+                    node.right = sortedArrayToBST(nums, mid + 1, end);
+                }
+                return node;
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * 给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。
+     * <p>
+     * 说明:
+     * <p>
+     * 初始化 nums1 和 nums2 的元素数量分别为 m 和 n。
+     * 你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。
+     * 示例:
+     * <p>
+     * 输入:
+     * nums1 = [1,2,3,0,0,0], m = 3
+     * nums2 = [2,5,6],       n = 3
+     * <p>
+     * 输出: [1,2,2,3,5,6]
+     */
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = m - 1, j = n - 1, k = m + n - 1;
+        while (j >= 0) {
+            nums1[k--] = i >= 0 && nums1[i] > nums2[j] ? nums1[i--] : nums2[j--];
+        }
+    }
 }
