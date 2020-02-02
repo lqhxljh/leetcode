@@ -14,5 +14,6 @@ public class Main {
         ListNode temp2 = new ListNode(-129);
         temp1.next = temp2;
         System.out.println(solution.isPalindrome(temp1));
+        System.out.println(solution.firstBadVersion(3));
     }
 }
