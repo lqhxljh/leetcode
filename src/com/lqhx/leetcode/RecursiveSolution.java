@@ -1,6 +1,8 @@
-package com.lqhx.leetcode.DataStruck;
+package com.lqhx.leetcode;
 
-public class Recursive {
+import com.lqhx.leetcode.DataStruck.ListNode;
+
+public class RecursiveSolution {
     public ListNode reverseList(ListNode head) {
         if (head == null || head.next == null) {
             return head;
@@ -41,7 +43,6 @@ public class Recursive {
     }
 
 
-
     public class TreeNode {
         int val;
         TreeNode left;
@@ -52,29 +53,54 @@ public class Recursive {
         }
     }
 
+    /**
+     * 第K个语法符号
+     * 在第一行我们写上一个 0。接下来的每一行，将前一行中的0替换为01，1替换为10。
+     * 给定行数 N 和序数 K，返回第 N 行中第 K个字符。（K从1开始）
+     */
     public int kthGrammar(int N, int K) {
-        StringBuffer[] results = new StringBuffer[N + 1];
-        for (int i = 0; i <= N; i++) {
-            if (i == 0) {
-                results[0] = new StringBuffer("0");
+        if (N < 1 || K > Math.pow(2, N - 1) || K < 1) {
+            return 0;
+        } else {
+            if (N == 1 || K == 1) {
+                return 0;
             } else {
-                StringBuffer temp = results[i - 1];
-                StringBuffer temp2 = new StringBuffer("");
-                for (int j = 0; j < temp.length(); j++) {
-                    char tempChar = temp.charAt(j);
-                    if (tempChar == '0') {
-                        temp2.append("01");
+                int result = kthGrammar(N - 1, (K + 1) / 2);
+                if (K % 2 == 1) {
+                    return result;
+
+                } else {
+                    if (result == 0) {
+                        return 1;
                     } else {
-                        temp2.append("10");
+                        return 0;
                     }
                 }
-                results[i] = temp2;
             }
         }
-        if (K <= results[N].length()) {
-            return results[N].charAt(K) - '0';
-        } else {
+    }
+
+    public double myPow(double x, int n) {
+        if (x == 0) {
             return 0;
+        } else if (n > 0) {
+            return pow(x, n);
+        } else if (n == 0) {
+            return 1;
+        } else {
+            return 1 / pow(x, -n);
         }
     }
+
+    private double pow(double x, int n) {
+        if (n == 0) {
+            return 1;
+        } else {
+            return x * (pow(x, n - 1));
+        }
+    }
+
+
+
+
 }
