@@ -1,4 +1,4 @@
-package com.lqhx.leetcode.DataStruck;
+package com.lqhx.leetcode.datastruck;
 
 public class TreeNode {
     public int val;

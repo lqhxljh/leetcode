@@ -1,7 +1,7 @@
 package com.lqhx.leetcode;
 
-import com.lqhx.leetcode.DataStruck.ListNode;
-import com.lqhx.leetcode.DataStruck.TreeNode;
+import com.lqhx.leetcode.datastruck.ListNode;
+import com.lqhx.leetcode.datastruck.TreeNode;
 
 import java.util.*;
 

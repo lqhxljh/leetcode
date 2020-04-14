@@ -1,6 +1,6 @@
 package com.lqhx.leetcode;
 
-import com.lqhx.leetcode.DataStruck.ListNode;
+import com.lqhx.leetcode.datastruck.ListNode;
 
 public class RecursiveSolution {
     public ListNode reverseList(ListNode head) {

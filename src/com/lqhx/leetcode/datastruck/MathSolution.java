@@ -1,4 +1,4 @@
-package com.lqhx.leetcode.DataStruck;
+package com.lqhx.leetcode.datastruck;
 
 import java.util.HashMap;
 import java.util.HashSet;

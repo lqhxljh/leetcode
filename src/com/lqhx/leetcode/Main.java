@@ -1,7 +1,8 @@
 package com.lqhx.leetcode;
 
 
-import com.lqhx.leetcode.DataStruck.MathSolution;
+import com.lqhx.leetcode.datastruck.MathSolution;
+import com.lqhx.leetcode.datastruck.QueueStackSolution;
 
 public class Main {
 
@@ -17,8 +18,15 @@ public class Main {
         RecursiveSolution recursiveSolution = new RecursiveSolution();
         System.out.println(recursiveSolution.kthGrammar(2, 2));
         System.out.println(recursiveSolution.kthGrammar(4, 5));
-        int[] xxx = {1, 7, 3, 6, 5, 6};
-        System.out.println(recursiveSolution.pivotIndex(xxx));
-
+        char[][] grid = {
+                {'1', '1', '0', '0', '0'},
+                {'1', '1', '0', '0', '0'},
+                {'0', '0', '1', '0', '0'},
+                {'0', '0', '0', '1', '1'}
+        };
+        QueueStackSolution queueStackSolution = new QueueStackSolution();
+        queueStackSolution.numIslands(grid);
     }
+
+
 }
